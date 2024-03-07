@@ -400,6 +400,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "bevy_blend_depth_order_issue_reproducible"
+version = "0.1.0"
+dependencies = [
+ "bevy",
+]
+
+[[package]]
 name = "bevy_core"
 version = "0.13.0"
 source = "git+https://github.com/floppyhammer/bevy?branch=fix-camera-distance#828781bfdee511e938a906bc0a5da70975e8c099"
@@ -1056,13 +1063,6 @@ dependencies = [
  "cc",
  "cfg-if",
  "constant_time_eq",
-]
-
-[[package]]
-name = "blendmode"
-version = "0.1.0"
-dependencies = [
- "bevy",
 ]
 
 [[package]]

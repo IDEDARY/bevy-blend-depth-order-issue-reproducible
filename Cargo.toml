@@ -1,5 +1,5 @@
 [package]
-    name = "blendmode"
+    name = "bevy_blend_depth_order_issue_reproducible"
     version = "0.1.0"
     edition = "2021"
 
