@@ -19,12 +19,13 @@ fn setup(
     // Spawn camera
     commands.spawn((
         Camera3d::default(),
-        OrderIndependentTransparencySettings::default(),
         OrbitCamera {
             orbit: Vec3::new(0.0, 0.0, 0.0),
             distance: 800.0,
             sensitivity: Vec2::splat(0.1),
-        }
+        },
+        // Add this to fix transparency
+        OrderIndependentTransparencySettings::default(),
     )).insert(
         // Msaa currently doesn't work with OIT
         Msaa::Off,
