@@ -1,3 +1,4 @@
+use bevy::core_pipeline::oit::OrderIndependentTransparencySettings;
 use bevy::prelude::*;
 
 fn main() {
@@ -17,36 +18,44 @@ fn setup(
 
     // Spawn camera
     commands.spawn((
-        Camera3dBundle::default(),
+        Camera3d::default(),
+        OrderIndependentTransparencySettings::default(),
         OrbitCamera {
             orbit: Vec3::new(0.0, 0.0, 0.0),
             distance: 800.0,
             sensitivity: Vec2::splat(0.1),
         }
-    ));
+    )).insert(
+        // Msaa currently doesn't work with OIT
+        Msaa::Off,
+    );
 
     // Spawn 3 panels
     for x in [-1, 0, 1] {
 
         // Spawn transparent panel
-        commands.spawn(
-            MaterialMeshBundle {
-                transform: Transform::from_xyz(0.0, 0.0, 300.0 * x as f32),
-                mesh: mesh.add(Rectangle {half_size: Vec2::new(818.0, 965.0) / 2.0}),
-                material: materials.add(StandardMaterial { base_color_texture: Some(asset_server.load("panel.png")), unlit: true, alpha_mode: AlphaMode::Blend, ..default() }),
+        commands.spawn((
+            Transform::from_xyz(0.0, 0.0, 300.0 * x as f32),
+            Mesh3d(mesh.add(Rectangle::new(818.0, 965.0))),
+            MeshMaterial3d(materials.add(StandardMaterial {
+                base_color_texture: Some(asset_server.load("panel.png")),
+                unlit: true,
+                alpha_mode: AlphaMode::Blend,
                 ..default()
-            }
-        ).with_children(|panel| {
+            })),
+        )).with_children(|panel| {
 
             // Spawn transparent panel overlay as child
-            panel.spawn(
-                MaterialMeshBundle {
-                    transform: Transform::from_xyz(0.0, 400.0, 50.0),
-                    mesh: mesh.add(Rectangle {half_size: Vec2::new(818.0, 169.0) / 2.0}),
-                    material: materials.add(StandardMaterial { base_color_texture: Some(asset_server.load("panel_head.png")), unlit: true, alpha_mode: AlphaMode::Blend, ..default() }),
+            panel.spawn((
+                Transform::from_xyz(0.0, 400.0, 50.0),
+                Mesh3d(mesh.add(Rectangle::new(818.0, 169.0))),
+                MeshMaterial3d(materials.add(StandardMaterial {
+                    base_color_texture: Some(asset_server.load("panel_head.png")),
+                    unlit: true,
+                    alpha_mode: AlphaMode::Blend,
                     ..default()
-                }
-            );
+                })),
+            ));
 
         });
     }

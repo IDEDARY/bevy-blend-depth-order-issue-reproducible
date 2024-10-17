@@ -4,4 +4,4 @@
     edition = "2021"
 
 [dependencies]
-    bevy = { git = "https://github.com/floppyhammer/bevy", branch="fix-camera-distance" }
+    bevy = { git = "https://github.com/bevyengine/bevy" }
